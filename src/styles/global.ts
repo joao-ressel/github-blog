@@ -6,8 +6,6 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-    
 }
 
 :focus{
@@ -29,7 +27,6 @@ export const GlobalStyle = createGlobalStyle`
 export const Container = styled.main`
   width: 864px;
   margin: -6rem auto 6rem auto;
-
 
   display: flex;
   flex-direction: column;

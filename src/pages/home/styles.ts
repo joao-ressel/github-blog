@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ProfileContainer = styled.div`
   background: ${(props) => props.theme["base-profile"]};
   padding: 2rem 2.5rem;
-  
+
   border-radius: 10px;
   display: flex;
   gap: 2rem;

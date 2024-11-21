@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { api } from "../../services/api";
-import { Link } from "react-router-dom";
-import { Header } from "../../components/header";
-import { InputSearch, PostsList, ProfileContainer, ProfileInfo, Publications } from "./styles";
-import { FolderOpen, GithubLogo, UsersThree, Link as Li } from "@phosphor-icons/react";
-import { Container } from "../../styles/global";
-import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { FolderOpen, GithubLogo, UsersThree, Link as Li } from "@phosphor-icons/react";
+
+import { api } from "../../services/api";
+import { Header } from "../../components/header";
+import { Container } from "../../styles/global";
+import { InputSearch, PostsList, ProfileContainer, ProfileInfo, Publications } from "./styles";
 
 interface UserProfile {
   avatar_url: string;
@@ -48,7 +49,7 @@ export const Home: React.FC = () => {
       const searchQuery = query
         ? `/search/issues?q=is:issue%20${query}%20repo:joao-ressel/github-blog`
         : `/search/issues?q=is:issue%20repo:joao-ressel/github-blog`;
-  
+
       const response = await api.get(searchQuery);
       setIssues(response.data.items);
     } catch (error) {
@@ -56,7 +57,7 @@ export const Home: React.FC = () => {
       setError("Erro ao carregar as publicações.");
     }
   };
-  
+
   useEffect(() => {
     fetchProfile();
     fetchIssues();
@@ -75,7 +76,7 @@ export const Home: React.FC = () => {
     <div>
       <Header />
       <Container>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         {profile && (
           <ProfileContainer>
             <img src={profile.avatar_url} alt="Avatar" />

@@ -1,7 +1,8 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Home } from "./pages/home";
-import { Post } from "./pages/post";
 import { ThemeProvider } from "styled-components";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import { Post } from "./pages/post";
+import { Home } from "./pages/home";
 import { GlobalStyle } from "./styles/global";
 import { defaultTheme } from "./styles/themes/default";
 

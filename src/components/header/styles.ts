@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import backgroundCover from "../../assets/background-cover.png";
+
 export const HeaderContainer = styled.header`
   background-image: url(${backgroundCover});
   background-size: cover;

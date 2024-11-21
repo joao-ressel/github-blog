@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { api } from "../../services/api";
-import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { PostContent, PostHeader, PostInfo, PostTitle, PostLinks } from "./styles";
-import { Header } from "../../components/header";
-import { ArrowLeft, Calendar, Chat, GithubLogo, Link as LinkIcon } from "@phosphor-icons/react";
-import { Container } from "../../styles/global";
-import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { formatDistanceToNow } from "date-fns";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, Calendar, Chat, GithubLogo, Link as LinkIcon } from "@phosphor-icons/react";
+
+import { api } from "../../services/api";
+import { Container } from "../../styles/global";
+import { Header } from "../../components/header";
+import { PostContent, PostHeader, PostInfo, PostTitle, PostLinks } from "./styles";
 
 interface IssueDetails {
   title: string;
