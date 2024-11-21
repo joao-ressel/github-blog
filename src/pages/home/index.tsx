@@ -5,6 +5,8 @@ import { Header } from "../../components/header";
 import { InputSearch, PostsList, ProfileContainer, ProfileInfo, Publications } from "./styles";
 import { FolderOpen, GithubLogo, UsersThree, Link as Li } from "@phosphor-icons/react";
 import { Container } from "../../styles/global";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 interface UserProfile {
   avatar_url: string;
@@ -21,38 +23,40 @@ interface Issue {
   title: string;
   body: string;
   number: number;
+  created_at: string;
 }
 
 export const Home: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [issues, setIssues] = useState<Issue[]>([]);
   const [search, setSearch] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  // Busca os dados do perfil do usuário
   const fetchProfile = async () => {
     try {
       const response = await api.get(`/users/joao-ressel`);
       setProfile(response.data);
     } catch (error) {
       console.error("Erro ao buscar perfil:", error);
+      setError(`Erro ao carregar o perfil.${error}`);
     }
   };
 
-  // Busca issues do repositório
   const fetchIssues = async (query = "") => {
     try {
+      // Adiciona o filtro "is:issue" para garantir que a consulta retorne apenas issues
       const searchQuery = query
-        ? `/search/issues?q=${query}%20repo:joao-ressel/github-blog`
-        : `/search/issues?q=repo:joao-ressel/github-blog`;
-
+        ? `/search/issues?q=is:issue%20${query}%20repo:joao-ressel/github-blog`
+        : `/search/issues?q=is:issue%20repo:joao-ressel/github-blog`;
+  
       const response = await api.get(searchQuery);
       setIssues(response.data.items);
     } catch (error) {
       console.error("Erro ao buscar issues:", error);
+      setError("Erro ao carregar as publicações.");
     }
   };
-
-  // Efeito para carregar perfil e issues iniciais
+  
   useEffect(() => {
     fetchProfile();
     fetchIssues();
@@ -71,6 +75,7 @@ export const Home: React.FC = () => {
     <div>
       <Header />
       <Container>
+      {error && <p style={{ color: "red" }}>{error}</p>}
         {profile && (
           <ProfileContainer>
             <img src={profile.avatar_url} alt="Avatar" />
@@ -114,10 +119,15 @@ export const Home: React.FC = () => {
 
         <PostsList>
           {issues.map((issue) => (
-            <li key={issue.id}>
-              <Link to={`/post/${issue.number}`}>{issue.title}</Link>
-              <p>{issue.body.substring(0, 100)}...</p>
-            </li>
+            <Link key={issue.id} to={`/post/${issue.number}`}>
+              <li>
+                <div>
+                  <h4>{issue.title}</h4>
+                  <p>Há {formatDistanceToNow(new Date(issue.created_at), { locale: ptBR })}</p>
+                </div>
+                <p>{issue.body.substring(0, 220)}...</p>
+              </li>
+            </Link>
           ))}
         </PostsList>
       </Container>

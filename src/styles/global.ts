@@ -27,9 +27,10 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.main`
-    width: 864px;
-    margin: 0 auto;
+  width: 864px;
+  margin: -6rem auto 6rem auto;
 
-    display: flex;
-    flex-direction: column;
+
+  display: flex;
+  flex-direction: column;
 `;
